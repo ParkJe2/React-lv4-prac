@@ -1,0 +1,13 @@
+{
+  "diary": [
+    {
+      "id": 1,
+      "title": "test title 1",
+      "body": "abcdefg",
+      "isDeleted": false,
+      "moodCode": 1,
+      "createdAt": "2023-07-08T12:00:00Z",
+      "passWord": "1234"
+    }
+  ]
+}

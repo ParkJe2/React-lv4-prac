@@ -1,9 +1,32 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { __getDiaries } from "../redux/modules/diarySlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Main = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch(__getDiaries());
+    };
+
+    fetchData();
+  }, []);
+
+  const { data, isLoading, isError, error } = useSelector((state) => state.diary);
+
+  if (isLoading) {
+    return <h1>아직 로딩중입니다.</h1>;
+  }
+
+  if (isError) {
+    return <h1>오류가 발생했어요</h1>;
+  }
+  console.log("data", data);
 
   const handleDiaryItemClick = (id) => {
     navigate(`/detail/${id}`);
@@ -11,12 +34,19 @@ const Main = () => {
 
   return (
     <StyledMain>
-      {[...Array(10)].map((_, index) => (
+      {data.map((item, index) => (
+        <StyledDiaryBox key={index} onClick={() => handleDiaryItemClick(item.id)}>
+          <StyledTitle>Diary {item.title}</StyledTitle>
+          <StyledDate>July 7, 2023</StyledDate>
+        </StyledDiaryBox>
+      ))}
+
+      {/* {[...Array(10)].map((_, index) => (
         <StyledDiaryBox key={index} onClick={handleDiaryItemClick}>
           <StyledTitle>Diary {index + 1}</StyledTitle>
           <StyledDate>July 7, 2023</StyledDate>
         </StyledDiaryBox>
-      ))}
+      ))} */}
     </StyledMain>
   );
 };
