@@ -1,0 +1,3 @@
+1. axios
+2. Redux-Thunk
+3. react-query
